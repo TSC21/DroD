@@ -14,6 +14,9 @@ for count in xrange(99): #considering 100 frames to find initial background
     if (not retVal) or (cv2.waitKey(1)==27): #break if frame is not read
         break
     
+    #TODO
+    #color space conversion to ceil*a*b*
+    
     buffer.append(frame) #buffer is made by appending 99 frames to the initial first frame
     
     cv2.imshow('video', frame)
