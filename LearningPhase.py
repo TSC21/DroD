@@ -5,8 +5,9 @@ import median
 video = cv2.VideoCapture('D:\Stuff\Drowning Detection\drowning.mp4')
 
 retVal, firstFrame = video.read()
+resizedFirstFrame = cv2.resize(firstFrame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR)
 
-buffer = [firstFrame] #creating an array of images
+buffer = [resizedFirstFrame] #creating an array of images
 
 cv2.namedWindow('video')
 for count in xrange(99): #considering 100 frames to find initial background
@@ -14,12 +15,10 @@ for count in xrange(99): #considering 100 frames to find initial background
     if (not retVal) or (cv2.waitKey(1)==27): #break if frame is not read
         break
     
-    #TODO
-    #color space conversion to ceil*a*b*
+    resizedFrame = cv2.resize(frame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR) #resize each frame
+    buffer.append(resizedFrame) #buffer is made by appending 99 frames to the initial first frame
     
-    buffer.append(frame) #buffer is made by appending 99 frames to the initial first frame
-    
-    cv2.imshow('video', frame)
+    cv2.imshow('video', resizedFrame)
 
 cv2.destroyWindow('video')
 video.release()
