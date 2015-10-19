@@ -1,6 +1,7 @@
 import cv2
 import numpy
 import median
+import blockBasedModel
 
 video = cv2.VideoCapture('D:\Stuff\Drowning Detection\drowning.mp4')
 
@@ -26,7 +27,11 @@ video.release()
 print median.name
 medianImage = median.getMedian(buffer) #function gives median of buffer
 
+print blockBasedModel.name
+clusteredMedianImage = blockBasedModel.getBlockBasedModel(medianImage, 40) #takes image, size of square block, returns k-means clustered-block based-model
+
 cv2.imshow('m', medianImage)
+cv2.imshow('cm', clusteredMedianImage)
 cv2.waitKey(0)
 
 cv2.destroyAllWindows()
