@@ -29,7 +29,7 @@ def getClusteredImage(image): #returns k-means clustered image
     stackedImage = numpy.float32(stackedImage)
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-    ret, label, center = cv2.kmeans(stackedImage, 2, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS) #parameter values need to be tuned for optimum performance
+    ret, label, center = cv2.kmeans(stackedImage, 2, criteria, 10, cv2.KMEANS_RANDOM_CENTERS) #parameter values need to be tuned for optimum performance
 
     #k centers(of shape nChannels) are generated. Each pixel is closest to one of the centers. That data is in the label array. Each pixel is set to its matching center in next line
     #refer to http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_ml/py_kmeans/py_kmeans_opencv/py_kmeans_opencv.html
