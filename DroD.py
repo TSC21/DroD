@@ -2,6 +2,7 @@ import numpy
 import cv2
 import LearningPhase
 import DetectionPhase
+import hysteresisThreshold  #added by Sai
 
 video = cv2.VideoCapture('D:\Stuff\Drowning Detection\drowning.mp4')
 
@@ -26,3 +27,10 @@ print DetectionPhase.name
 detector = DetectionPhase.DetectionPhase()
 detector.detect(video, initialBackgroundClusterCenters)
 
+#Added by Sai
+#img = cv2.imread('test.jpeg')
+#print hysteresisThreshold.name
+#hys = hysteresisThreshold.hysteresisThreshold()
+#imgout=hys.hysthreshold(img,100,50)
+#cv2.imwrite('output.png',imgout)
+#Added by Sai
