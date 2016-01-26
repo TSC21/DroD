@@ -38,7 +38,7 @@ class DrodNode(object):
         rospack = rospkg.RosPack()
         self.pkg_path = rospack.get_path('drod')
         test_set_path = os.path.join(self.pkg_path, rospy.get_param(
-            '~test_video', '/test_set/drowning.mp4'))
+            '~test_video', '/test_set/DrowningvSwimming_(Edited).mp4'))
 
         # parameters:
         # live stream or video test? True if the latest
