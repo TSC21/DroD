@@ -1,0 +1,6 @@
+<launch>
+  <!--Main node-->
+  <node name="drod" output="screen" pkg="drod" respawn="true" respawn_delay="5" type="DroD.py">
+    <remap from="/image_topic" to="/repub_raw"/>
+  </node>
+</launch>
