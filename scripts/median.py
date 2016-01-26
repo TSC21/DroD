@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2016, DroD Team.
+# All rights reserved.
+#
+
 import cv2
 import numpy
 
@@ -15,18 +20,18 @@ class Median:
         #                                                           [99B1, 99G1, 99R1, 99B2, 99G2, 99R2, 99B3, 99G3, 99R3,..........] ] using numpy.vstack()
 
         #refer to http://stackoverflow.com/questions/16135677/efficient-way-to-find-median-value-of-a-number-of-rgb-images
-    
+
         lap1 = cv2.getTickCount() #measuring performance
-        stackedFlattened = numpy.vstack((frame.ravel() for frame in buffer)) 
+        stackedFlattened = numpy.vstack((frame.ravel() for frame in buffer))
         firstFrame = buffer[0]
         del buffer
-    
+
         #numpy.median() is used to get the median of each column in the 2 dimensional array
 
         lap2 = cv2.getTickCount()
         medianImageFlattened = numpy.median(stackedFlattened, axis = 0)
         del stackedFlattened
-    
+
         #now we have a one dimensional array of only medians : [MB1, MG1, MR1, MB2, MG2, MR2, MB3, MG3, MR3,...........]
         #it is reshaped to form the image
 

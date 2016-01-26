@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2016, DroD Team.
+# All rights reserved.
+#
+
 import cv2
 import numpy
 import median
@@ -6,7 +11,7 @@ import blockBasedModel
 name = 'LearningPhase'
 
 class LearningPhase:
-    
+
     def learn(self, video, nSamples):
 
         retVal, firstFrame = video.read()
@@ -19,11 +24,11 @@ class LearningPhase:
             retVal, frame = video.read()
             if (not retVal) or (cv2.waitKey(1)==27): #break if frame is not read
                 break
-    
+
             resizedFrame = cv2.resize(frame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR) #resize each frame
 
             buffer.append(resizedFrame) #buffer is made by appending nSamples-1 frames to the initial first frame
-    
+
             cv2.imshow('video', resizedFrame)
 
         cv2.destroyWindow('video')

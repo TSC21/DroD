@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2016, DroD Team.
+# All rights reserved.
+#
+
 import cv2
 import numpy
 
@@ -18,7 +23,7 @@ class HysteresisThreshold():
     def __hysConnect(self, x, y, width, height, lowerThreshold, binaryImage, grayImage):				                        #private class
         binaryImageCopy = numpy.array(binaryImage)
         for x1 in range(x-1, x+2):						                                                                        #scan N8 pixels
-            for y1 in range(y-1, y+2): 
+            for y1 in range(y-1, y+2):
                 if x1 < width and y1 < height and x1 >= 0 and y1 >= 0 and x1 != x and y1 != y:
                     if binaryImage[y1,x1]!=255 and grayImage[y1,x1]>=lowerThreshold:					                        #make sure it isn't white and if threshold>=lthres
                         binaryImageCopy[y1,x1] = 255		                                                                    #make it white

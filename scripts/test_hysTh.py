@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+#
+# Copyright (c) 2016, DroD Team.
+# All rights reserved.
+#
+
 import numpy
 import cv2
 import hysteresisThreshold         #import the hysteresis module
@@ -14,6 +21,6 @@ cv2.imwrite('output.png',imgout)                  # write out the image to disk
 #for i in xrange(2):
 #	plt.subplot(2,1,i+1),plt.imshow(images[i],'gray')
 #       plt.title(titles[i])
-#       plt.xticks([]),plt.yticks([]) 
+#       plt.xticks([]),plt.yticks([])
 #       plt.show()
 #       plt.imshow(imgages[i],'gray')

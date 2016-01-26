@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2016, DroD Team.
+# All rights reserved.
+#
+
 import numpy
 import cv2
 
@@ -15,7 +20,7 @@ class BlockBasedModel:
         bS = blocks.shape #(n, m, s, s, nChannels)
         aBS = ((bS[0]*bS[1]), bS[2], bS[3], bS[4]) #aligned block shape
         alignedBlocks = blocks.reshape(aBS) #(nxm, s, s, nChannels), array of nxm blocks, all aligned
-    
+
         #k-means cluster each part
         self.clusterCenters = [numpy.zeros([2, nChannels])] #initializing cluster centers
         clusteredAlignedBlocks = numpy.array([self.getClusteredImage(block) for block in alignedBlocks]) #finding cluster for each block and aligning the clusters(same size as block)
@@ -31,7 +36,7 @@ class BlockBasedModel:
         return image
 
     def getClusteredImage(self, image): #returns k-means clustered image
-        height, width, nChannels = image.shape 
+        height, width, nChannels = image.shape
 
         stackedImage = image.reshape((height*width, nChannels)) #data needs to be of shape (A, B), where each data[a,:] is a point to be clustered. Our points are colors
         stackedImage = numpy.float32(stackedImage)

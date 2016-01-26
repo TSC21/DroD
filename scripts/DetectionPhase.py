@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2016, DroD Team.
+# All rights reserved.
+#
+
 import cv2
 import numpy
 import colorDiscrepancy
@@ -5,7 +10,7 @@ import colorDiscrepancy
 name = 'DetectionPhase'
 
 class DetectionPhase:
-    
+
     def detect(self, video, initialBackgroundClusterCenters):
         cv2.namedWindow('DifferenceImage')
         cv2.namedWindow('SegmentedImage')
@@ -22,18 +27,18 @@ class DetectionPhase:
 
         blockBasedModelObj = blockBasedModel.BlockBasedModel()
         hysteresisThresholdObj = hysteresisThreshold.HysteresisThreshold()
-        
+
         while(video.isOpened()):
             retVal, frame = video.read()
             if (not retVal) or (cv2.waitKey(1)==27): #break if frame is not read
                 break
-    
+
             resizedFrame = cv2.resize(frame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR) #resize each frame
 
             differenceImage = colorDiscrepancyObj.getColorDiscrepancy(resizedFrame, backgroundClusterCenters, 40)
 
             segmentedImage = hysteresisThresholdObj.hysThreshold(differenceImage, 127, 127);
-            
+
             buffer.append(resizedFrame)
             if(len(buffer)>10):
                 buffer.pop(0)
