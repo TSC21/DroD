@@ -11,8 +11,14 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-find_package(OpenCV REQUIRED COMPONENTS system)
-
+set(OpenCV_DIR "/opt/ros/${ROS_DISTRO}/share/OpenCV-3.1.0-dev")
+set(OpenCV_INCLUDE_DIRS "/opt/ros/${ROS_DISTRO}/include/opencv-3.1.0-dev")
+find_package(OpenCV REQUIRED)
+include_directories(${OPENCV_INCLUDE_DIRS})
+message(STATUS "OpenCV library status:")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -137,6 +143,7 @@ include_directories(
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(drod_node
 #   ${catkin_LIBRARIES}
+#   ${OpenCV_LIBS}
 # )
 
 #############
