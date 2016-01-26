@@ -9,6 +9,7 @@ import colorDiscrepancy
 
 name = 'DetectionPhase'
 
+
 class DetectionPhase:
 
     def detect(self, video, initialBackgroundClusterCenters):
@@ -21,7 +22,7 @@ class DetectionPhase:
 
         backgroundClusterCenters = initialBackgroundClusterCenters
 
-        buffer = [] #creating an array of images
+        buffer = []  # creating an array of images
 
         meanObj = mean.Mean()
 
@@ -30,21 +31,25 @@ class DetectionPhase:
 
         while(video.isOpened()):
             retVal, frame = video.read()
-            if (not retVal) or (cv2.waitKey(1)==27): #break if frame is not read
+            if (not retVal) or (cv2.waitKey(1) == 27):  # break if frame is not read
                 break
 
-            resizedFrame = cv2.resize(frame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR) #resize each frame
+            resizedFrame = cv2.resize(
+                frame, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)  # resize each frame
 
-            differenceImage = colorDiscrepancyObj.getColorDiscrepancy(resizedFrame, backgroundClusterCenters, 40)
+            differenceImage = colorDiscrepancyObj.getColorDiscrepancy(
+                resizedFrame, backgroundClusterCenters, 40)
 
-            segmentedImage = hysteresisThresholdObj.hysThreshold(differenceImage, 127, 127);
+            segmentedImage = hysteresisThresholdObj.hysThreshold(
+                differenceImage, 127, 127)
 
             buffer.append(resizedFrame)
-            if(len(buffer)>10):
+            if(len(buffer) > 10):
                 buffer.pop(0)
             updatedBackground = meanObj.getMean(buffer)
 
-            blockBasedUpdatedBackground = blockBasedModelObj.getBlockBasedModel(updatedBackground, 40)
+            blockBasedUpdatedBackground = blockBasedModelObj.getBlockBasedModel(
+                updatedBackground, 40)
             backgroundClusterCenters = blockBasedModelObj.getClusterCenters()
 
             cv2.imshow('DifferenceImage', differenceImage)

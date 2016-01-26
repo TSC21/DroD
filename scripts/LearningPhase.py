@@ -10,24 +10,30 @@ import blockBasedModel
 
 name = 'LearningPhase'
 
+
 class LearningPhase:
 
     def learn(self, video, nSamples):
 
         retVal, firstFrame = video.read()
-        resizedFirstFrame = cv2.resize(firstFrame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR)
+        resizedFirstFrame = cv2.resize(
+            firstFrame, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
 
-        buffer = [resizedFirstFrame] #creating an array of images
+        buffer = [resizedFirstFrame]  # creating an array of images
 
         cv2.namedWindow('video')
-        for count in xrange(nSamples-1): #considering nSamples frames to find initial background
+        # considering nSamples frames to find initial background
+        for count in xrange(nSamples - 1):
             retVal, frame = video.read()
-            if (not retVal) or (cv2.waitKey(1)==27): #break if frame is not read
+            if (not retVal) or (cv2.waitKey(1) == 27):  # break if frame is not read
                 break
 
-            resizedFrame = cv2.resize(frame, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_LINEAR) #resize each frame
+            resizedFrame = cv2.resize(
+                frame, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)  # resize each frame
 
-            buffer.append(resizedFrame) #buffer is made by appending nSamples-1 frames to the initial first frame
+            # buffer is made by appending nSamples-1 frames to the initial
+            # first frame
+            buffer.append(resizedFrame)
 
             cv2.imshow('video', resizedFrame)
 
@@ -36,11 +42,15 @@ class LearningPhase:
 
         print median.name
         medianObj = median.Median()
-        initialBackground = medianObj.getMedian(buffer) #function gives median of buffer
+        initialBackground = medianObj.getMedian(
+            buffer)  # function gives median of buffer
 
         print blockBasedModel.name
         blockBasedModelObj = blockBasedModel.BlockBasedModel()
-        blockBasedInitialBackground = blockBasedModelObj.getBlockBasedModel(initialBackground, 40) #takes image, size of square block, returns k-means clustered-block based-model
+        # takes image, size of square block, returns k-means clustered-block
+        # based-model
+        blockBasedInitialBackground = blockBasedModelObj.getBlockBasedModel(
+            initialBackground, 40)
         self.initialBackgroundClusterCenters = blockBasedModelObj.getClusterCenters()
 
         cv2.imshow('m', initialBackground)
