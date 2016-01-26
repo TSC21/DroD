@@ -45,8 +45,6 @@ class DrodNode(object):
         self.is_testing = rospy.get_param('~isatest', True)
         # number of samples to be considered for learning phase
         self.num_of_samples = rospy.get_param('~num_of_samples', 400)
-        # set debug
-        self.debug = rospy.get_param('~debug', True)
 
         if is_testing:
             rospy.loginfo('Loaded video to test: %s', test_set_path)
@@ -56,10 +54,10 @@ class DrodNode(object):
             height = video_src.get(cv2.CAP_PROP_FRAME_HEIGHT)
             frame_count = video_src.get(cv2.CAP_PROP_FRAME_COUNT)
 
-            if self.debug:
-                rospy.loginfo('Image resolution: %dx%d', width, height)
-                rospy.loginfo('Number of frames: %d', frame_count)
+            rospy.loginfo('Image resolution: %dx%d', width, height)
+            rospy.loginfo('Number of frames: %d', frame_count)
 
+            # why we need this?
             # self.video_src.open(test_set_path)
             # self.video_src.set(cv2.CAP_PROP_POS_FRAMES, self.num_of_samples)
 
@@ -69,26 +67,30 @@ class DrodNode(object):
             self.image_sub = ropy.Subscriber(
                 "/camera/image_raw", sensor_msgs.msg.Image, self.camera_callback)
 
-        if self.debug:
-            rospy.loginfo(lp.name)
-            rospy.loginfo(dp.name)
+        rospy.logdebug(lp.name)
+        rospy.logdebug(dp.name)
 
         self.learner = lp.LearningPhase()
         self.detector = dp.DetectionPhase()
 
     def camera_callback(self):
+        '''
+        function to get data from camera
+        '''
     	try:
             img = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
             print(e)
 
-        if self.debug:
-            height, width, channels = img.shape
-            rospy.loginfo('Image resolution: %dx%d', width, height)
+        height, width, channels = img.shape
+        rospy.logdebug('Image resolution: %dx%d', width, height)
 
         self.node_routine(img)
 
     def node_routine(self, video_src):
+        '''
+        function to launch the pipeline routine
+        '''
         self.learner.learn(video_src, self.num_of_samples)
         self.detector.detect(video_src, self.learner.getInitialBackgroundClusterCenters())
 
