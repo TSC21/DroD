@@ -40,12 +40,12 @@ class LearningPhase:
         cv2.destroyWindow('video')
         video.release()
 
-        rospy.loginfo(median.name)
+        rospy.loginfo("Computing %s",median.name)
         medianObj = median.Median()
         initialBackground = medianObj.getMedian(
             buffer)  # function gives median of buffer
 
-        rospy.loginfo(blockBasedModel.name)
+        rospy.loginfo("Initiating %s",blockBasedModel.name)
         blockBasedModelObj = blockBasedModel.BlockBasedModel()
         # takes image, size of square block, returns k-means clustered-block
         # based-model
@@ -54,6 +54,7 @@ class LearningPhase:
         self.initialBackgroundClusterCenters = blockBasedModelObj.getClusterCenters()
 
         cv2.imshow('m', initialBackground)
+        cv2.waitKey(1)
         cv2.imshow('cm', blockBasedInitialBackground)
         cv2.waitKey(1)
 

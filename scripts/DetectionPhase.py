@@ -17,7 +17,7 @@ class DetectionPhase:
         cv2.namedWindow('SegmentedImage')
         cv2.namedWindow('UpdatedBackground')
 
-        rospy.loginfo(colorDiscrepancy.name)
+        rospy.loginfo("Computing %s", colorDiscrepancy.name)
         colorDiscrepancyObj = colorDiscrepancy.ColorDiscrepancy()
 
         backgroundClusterCenters = initialBackgroundClusterCenters

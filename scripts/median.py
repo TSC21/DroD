@@ -51,5 +51,5 @@ class Median:
         t3 = (lap4 - lap3) / cv2.getTickFrequency()
 
         rospy.loginfo(
-            "\nTime taken by vstack(ravel()): %fsec\nTime taken by numpy.median: %fsec\nTime taken by reshape: %fsec", t1, t2, t3)
+            "\nTime taken by vstack(ravel()): \t%f sec\nTime taken by numpy.median: \t%f sec\nTime taken by reshape: \t\t%f sec", t1, t2, t3)
         return medianImage
