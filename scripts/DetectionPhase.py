@@ -62,8 +62,5 @@ class DetectionPhase:
             cv2.imshow('UpdatedBackground', updatedBackground)
             cv2.waitKey(1)
 
-        cv2.destroyWindow('DifferenceImage')
-        cv2.destroyWindow('SegmentedImage')
-        cv2.destroyWindow('UpdatedBackground')
         cv2.destroyAllWindows()
         video.release()
