@@ -4,7 +4,7 @@
 #
 
 import cv2
-import numpy
+import rospy
 import median
 import blockBasedModel
 
@@ -40,12 +40,12 @@ class LearningPhase:
         cv2.destroyWindow('video')
         video.release()
 
-        print median.name
+        rospy.loginfo(median.name)
         medianObj = median.Median()
         initialBackground = medianObj.getMedian(
             buffer)  # function gives median of buffer
 
-        print blockBasedModel.name
+        rospy.loginfo(blockBasedModel.name)
         blockBasedModelObj = blockBasedModel.BlockBasedModel()
         # takes image, size of square block, returns k-means clustered-block
         # based-model
@@ -55,7 +55,7 @@ class LearningPhase:
 
         cv2.imshow('m', initialBackground)
         cv2.imshow('cm', blockBasedInitialBackground)
-        cv2.waitKey(0)
+        cv2.waitKey(1)
 
         cv2.destroyAllWindows()
 

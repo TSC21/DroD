@@ -4,7 +4,8 @@
 #
 
 import cv2
-import numpy
+import rospy
+import numpy as np
 
 name = 'median'
 
@@ -24,22 +25,22 @@ class Median:
         # http://stackoverflow.com/questions/16135677/efficient-way-to-find-median-value-of-a-number-of-rgb-images
 
         lap1 = cv2.getTickCount()  # measuring performance
-        stackedFlattened = numpy.vstack((frame.ravel() for frame in buffer))
+        stackedFlattened = np.vstack((frame.ravel() for frame in buffer))
         firstFrame = buffer[0]
         del buffer
 
-        # numpy.median() is used to get the median of each column in the 2
+        # np.median() is used to get the median of each column in the 2
         # dimensional array
 
         lap2 = cv2.getTickCount()
-        medianImageFlattened = numpy.median(stackedFlattened, axis=0)
+        medianImageFlattened = np.median(stackedFlattened, axis=0)
         del stackedFlattened
 
         # now we have a one dimensional array of only medians : [MB1, MG1, MR1, MB2, MG2, MR2, MB3, MG3, MR3,...........]
         # it is reshaped to form the image
 
         lap3 = cv2.getTickCount()
-        medianImage = numpy.uint8(
+        medianImage = np.uint8(
             medianImageFlattened.reshape(firstFrame.shape))
         del medianImageFlattened
 
@@ -49,6 +50,6 @@ class Median:
         t2 = (lap3 - lap2) / cv2.getTickFrequency()
         t3 = (lap4 - lap3) / cv2.getTickFrequency()
 
-        print 'Time taken by vstack(ravel()):', t1, 'sec\nTime taken by numpy.median:', t2, 'sec\nTime taken by reshape:', t3, 'sec'
-
+        rospy.loginfo(
+            "\nTime taken by vstack(ravel()): %fsec\nTime taken by numpy.median: %fsec\nTime taken by reshape: %fsec", t1, t2, t3)
         return medianImage

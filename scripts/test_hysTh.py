@@ -5,7 +5,6 @@
 # All rights reserved.
 #
 
-import numpy
 import cv2
 import hysteresisThreshold  # import the hysteresis module
 #from matplotlib import pyplot as plt

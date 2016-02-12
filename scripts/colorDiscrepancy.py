@@ -4,7 +4,7 @@
 #
 
 import cv2
-import numpy
+import numpy as np
 
 name = 'ColorDiscrepancy'
 
@@ -71,13 +71,13 @@ class ColorDiscrepancy:
             cv2.resize(bgcBYXb[0:9, 0:16, :], None, fx=s,
                        fy=s, interpolation=cv2.INTER_NEAREST)
 
-        stackedFlattenedDifferences = numpy.vstack([diff00a.ravel(), diff00b.ravel(), diff01a.ravel(), diff01b.ravel(), diff10a.ravel(), diff10b.ravel(), diff11a.ravel(), diff11b.ravel(), diff0m1a.ravel(),
-                                                    diff0m1b.ravel(), diffm10a.ravel(), diffm10b.ravel(), diff1m1a.ravel(), diff1m1b.ravel(), diffm11a.ravel(), diffm11b.ravel(), diffm1m1a.ravel(), diffm1m1b.ravel()])
+        stackedFlattenedDifferences = np.vstack([diff00a.ravel(), diff00b.ravel(), diff01a.ravel(), diff01b.ravel(), diff10a.ravel(), diff10b.ravel(), diff11a.ravel(), diff11b.ravel(), diff0m1a.ravel(),
+                                                 diff0m1b.ravel(), diffm10a.ravel(), diffm10b.ravel(), diff1m1a.ravel(), diff1m1b.ravel(), diffm11a.ravel(), diffm11b.ravel(), diffm1m1a.ravel(), diffm1m1b.ravel()])
 
-        differenceImageFlattened = numpy.min(
-            numpy.absolute(stackedFlattenedDifferences), axis=0)
+        differenceImageFlattened = np.min(
+            np.absolute(stackedFlattenedDifferences), axis=0)
         del stackedFlattenedDifferences
-        differenceImage = numpy.uint8(
+        differenceImage = np.uint8(
             differenceImageFlattened.reshape(currentFrame.shape))
         del differenceImageFlattened
         return differenceImage

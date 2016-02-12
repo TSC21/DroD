@@ -4,7 +4,7 @@
 #
 
 import cv2
-import numpy
+import rospy
 import colorDiscrepancy
 
 name = 'DetectionPhase'
@@ -17,7 +17,7 @@ class DetectionPhase:
         cv2.namedWindow('SegmentedImage')
         cv2.namedWindow('UpdatedBackground')
 
-        print colorDiscrepancy.name
+        rospy.loginfo(colorDiscrepancy.name)
         colorDiscrepancyObj = colorDiscrepancy.ColorDiscrepancy()
 
         backgroundClusterCenters = initialBackgroundClusterCenters
@@ -53,8 +53,11 @@ class DetectionPhase:
             backgroundClusterCenters = blockBasedModelObj.getClusterCenters()
 
             cv2.imshow('DifferenceImage', differenceImage)
+            cv2.waitKey(1)
             cv2.imshow('SegmentedImage', segmentedImage)
+            cv2.waitKey(1)
             cv2.imshow('UpdatedBackground', updatedBackground)
+            cv2.waitKey(1)
 
         cv2.destroyWindow('DifferenceImage')
         cv2.destroyWindow('SegmentedImage')
