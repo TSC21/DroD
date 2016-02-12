@@ -9,14 +9,14 @@ import cv2
 import hysteresisThreshold  # import the hysteresis module
 #from matplotlib import pyplot as plt
 
-img = cv2.imread('test.jpeg')  # read the image i.e single video frame
+img = cv2.imread('../test_set/test.jpeg')  # read the image i.e single video frame
 print hysteresisThreshold.name
-hys = hysteresisThreshold.hysteresisThreshold()     # class dec
+hys = hysteresisThreshold.HysteresisThreshold()     # class dec
 # hysthreshold module with tunable parameters upperThreshold =100,
 # lowerThreshold=50
-imgout = hys.hysthreshold(img, 100, 50)
+imgout = hys.hysThreshold(img, 100, 50)
 # write out the image to disk
-cv2.imwrite('output.png', imgout)
+cv2.imwrite('../test_set/output/output.png', imgout)
 # use matplotlib to automatically view images
 #titles = ['Original Image','HysteresisThreshold']
 #images = [img, imgout]
