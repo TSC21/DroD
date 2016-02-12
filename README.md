@@ -5,9 +5,9 @@ The Python scripts are all located at the [scripts](https://github.com/TSC21/Dro
 
 ## Setup:
 ### Recommends system:
-- Ubuntu 14.04.3 with 3.19.*-generic Kernel (check yours with 'uname -a')
-- ROS Jade ('desktop-full' option)
-- OpenCV3 ROS package (which is linked to on the 'CMakeLists.txt' file)
+- Ubuntu 14.04.3 with `3.19.*-generic` Kernel (check yours with `uname -a`)
+- ROS Jade (`desktop-full` option)
+- OpenCV3 ROS package (which is linked to on the `CMakeLists.txt` file)
 
 ### Install ROS
 [http://wiki.ros.org/jade/Installation/Ubuntu](http://wiki.ros.org/jade/Installation/Ubuntu)
