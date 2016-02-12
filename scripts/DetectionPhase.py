@@ -8,7 +8,7 @@ import rospy
 import colorDiscrepancy
 import blockBasedModel
 import hysteresisThreshold
-#import mean
+import mean
 
 name = 'DetectionPhase'
 
