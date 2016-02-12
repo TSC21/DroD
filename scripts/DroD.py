@@ -37,7 +37,7 @@ class DrodNode(object):
         # test set path setup
         rospack = rospkg.RosPack()
         self.pkg_path = rospack.get_path('drod')
-        test_set_path = self.pkg_path + rospy.get_param(
+        self.test_set_path = self.pkg_path + rospy.get_param(
             '~test_video', '/test_set/DrowningvSwimming_(Edited).mp4')
 
         # parameters:
@@ -47,8 +47,8 @@ class DrodNode(object):
         self.num_of_samples = rospy.get_param('~num_of_samples', 400)
 
         if self.is_testing:
-            rospy.loginfo('Loaded video to test: %s', test_set_path)
-            self.video_src = cv2.VideoCapture(test_set_path)
+            rospy.loginfo('Loaded video to test: %s', self.test_set_path)
+            self.video_src = cv2.VideoCapture(self.test_set_path)
 
             width = self.video_src.get(cv2.CAP_PROP_FRAME_WIDTH)
             height = self.video_src.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -56,10 +56,6 @@ class DrodNode(object):
 
             rospy.loginfo('Image resolution: %dx%d', width, height)
             rospy.loginfo('Number of frames: %d', frame_count)
-
-            # why we need this?
-            self.video_src.open(test_set_path)
-            self.video_src.set(cv2.CAP_PROP_POS_FRAMES, self.num_of_samples)
 
         else:
             rospy.loginfo(
@@ -92,8 +88,15 @@ class DrodNode(object):
         function to launch the pipeline routine
         '''
         self.learner.learn(video_src, self.num_of_samples)
-        self.detector.detect(
-            video_src, self.learner.getInitialBackgroundClusterCenters())
+
+        if self.is_testing:
+            video_src.open(self.test_set_path)
+            video_src.set(cv2.CAP_PROP_POS_FRAMES, self.num_of_samples)
+            self.detector.detect(
+                video_src, self.learner.getInitialBackgroundClusterCenters())
+        else:
+            self.detector.detect(
+                video_src, self.learner.getInitialBackgroundClusterCenters())
 
         ''' Added by Sai
         img = cv2.imread('test.jpeg')
